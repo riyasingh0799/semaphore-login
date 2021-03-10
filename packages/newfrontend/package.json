@@ -1,0 +1,37 @@
+{
+  "name": "newfrontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf dist/*",
+    "start": "node server.js"
+  },
+  "alias": {
+    "worker_threads": "./src/externals/worker_threads.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "parcel": "^2.0.0-beta.1",
+    "parcel-bundler": "^1.12.3"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-transform-react-jsx": "^7.12.17",
+    "bulma": "^0.9.2",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^1.0.6",
+    "libsemaphore": "^1.0.16",
+    "local-storage": "^2.0.0",
+    "node-sass": "^5.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
+  }
+}

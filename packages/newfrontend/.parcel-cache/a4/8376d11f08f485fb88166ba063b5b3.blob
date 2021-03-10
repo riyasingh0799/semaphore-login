@@ -1,0 +1,11 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+const getContractInstance = async (web3, abi, address) => {
+  // get network ID and the deployed address
+  const networkId = await web3.eth.net.getId();
+  const deployedAddress = address;
+  // create the instance
+  const instance = new web3.eth.Contract(abi, deployedAddress);
+  return instance;
+};
+exports.default = getContractInstance;

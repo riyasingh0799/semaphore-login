@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "alwaysStrict": true,
+        "allowJs": true,
+        "noImplicitAny": false,
+        "forceConsistentCasingInFileNames": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": true,
+        "noImplicitReturns": false,
+        "noFallthroughCasesInSwitch": true,
+        "sourceMap": true,
+        "strict": true,
+        "outDir": "./build"
+    },
+    "include": [
+        "./ts"
+    ]
+}

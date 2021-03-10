@@ -1,0 +1,1 @@
+http-server "./cache" -p 5000 --cors
