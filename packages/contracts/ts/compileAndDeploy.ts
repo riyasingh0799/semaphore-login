@@ -55,14 +55,14 @@ const compileAbis = async (
     const solcCmd = `${solcBinaryPath} -o ${abiDir} ${solDir}/*.sol --overwrite --abi`
     const result = execute(solcCmd)
 
-    shell.rm('-rf', '../newfrontend/src/abi/')
+    shell.rm('-rf', '../frontend/src/abi/')
 
     // Copy ABIs to the frontend and backend modules
-    shell.mkdir('-p', '../newfrontend/src/abi/')
+    shell.mkdir('-p', '../frontend/src/abi/')
 
     shell.ls(path.join(abiDir, '*.abi')).forEach((file) => {
         const baseName = path.basename(file)
-        shell.cp('-R', file, `../newfrontend/src/abi/${baseName}.json`)
+        shell.cp('-R', file, `../frontend/src/abi/${baseName}.json`)
     })
 }
 
@@ -101,7 +101,7 @@ const compileAndDeploy = async (
 
     // create provider and wallet
     const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
-    const deployKey = "0xb22c473b2c12f566589a0e7c73507987ed82f09defb558466016c39942ae4d74"
+    const deployKey = "0x65a694ae485808ee346228f59a1eb9dd2b6d1b1f4b0212007469b7452118d9ba"
     const wallet = new ethers.Wallet(deployKey, provider)
 
     // deploy MiMC
@@ -143,15 +143,15 @@ const compileAndDeploy = async (
     )
     await scContract.deployed()
     console.log('Deployed Client Contract at', scContract.address)
-    shell.rm('-rf', '../newfrontend/src/addr/')
+    shell.rm('-rf', '../frontend/src/addr/')
 
-    shell.mkdir('-p', '../newfrontend/src/addr/')
-    execute('touch ../newfrontend/src/addr/addr.json');    
+    shell.mkdir('-p', '../frontend/src/addr/')
+    execute('touch ../frontend/src/addr/addr.json');    
 
     shell.env.semAddr = String(semaphoreContract.address);
     shell.env.scAddr = String(scContract.address);
     shell.env.json = execute(`jo -p -- -s semAddr=$semAddr -s scAddr=$scAddr`)
-    execute(`echo $json >> ../newfrontend/src/addr/addr.json`)
+    execute(`echo $json >> ../frontend/src/addr/addr.json`)
 
 
     // set the owner of the Semaphore contract to the SemaphoreClient contract address

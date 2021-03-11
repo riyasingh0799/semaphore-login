@@ -1,0 +1,63 @@
+@import '../node_modules/bulma/css/bulma.css';
+
+.App {
+  text-align: center;
+  align-items: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.identityTextarea {
+  width:800px;
+  height:50px;
+  font-family: monospace;
+}
+
+.connecteddot {
+  height: 9px;
+width: 9px;
+background-color: #23d160;
+border-radius: 50%;
+display: inline-block;
+}
+
+.disconnnecteddot {
+  height: 9px;
+width: 9px;
+background-color: hsl(54, 100%, 61%);
+border-radius: 50%;
+display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

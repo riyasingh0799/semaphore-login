@@ -84,12 +84,12 @@ var compileAbis = function (abiDir, solDir, solcBinaryPath) {
             shell.mkdir('-p', abiDir);
             solcCmd = solcBinaryPath + " -o " + abiDir + " " + solDir + "/*.sol --overwrite --abi";
             result = execute(solcCmd);
-            shell.rm('-rf', '../newfrontend/src/abi/');
+            shell.rm('-rf', '../frontend/src/abi/');
             // Copy ABIs to the frontend and backend modules
-            shell.mkdir('-p', '../newfrontend/src/abi/');
+            shell.mkdir('-p', '../frontend/src/abi/');
             shell.ls(path.join(abiDir, '*.abi')).forEach(function (file) {
                 var baseName = path.basename(file);
-                shell.cp('-R', file, "../newfrontend/src/abi/" + baseName + ".json");
+                shell.cp('-R', file, "../frontend/src/abi/" + baseName + ".json");
             });
             return [2 /*return*/];
         });
@@ -116,7 +116,7 @@ var compileAndDeploy = function (abiDir, solDir, solcBinaryPath, rpcUrl) {
                     solcCmd = solcBinaryPath + " -o " + abiDir + " " + solDir + "/*.sol --overwrite --optimize --abi --bin";
                     result = execute(solcCmd);
                     provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-                    deployKey = "0xb22c473b2c12f566589a0e7c73507987ed82f09defb558466016c39942ae4d74";
+                    deployKey = "0x65a694ae485808ee346228f59a1eb9dd2b6d1b1f4b0212007469b7452118d9ba";
                     wallet = new ethers.Wallet(deployKey, provider);
                     _a.label = 1;
                 case 1:
@@ -155,13 +155,13 @@ var compileAndDeploy = function (abiDir, solDir, solcBinaryPath, rpcUrl) {
                 case 7:
                     _a.sent();
                     console.log('Deployed Client Contract at', scContract.address);
-                    shell.rm('-rf', '../newfrontend/src/addr/');
-                    shell.mkdir('-p', '../newfrontend/src/addr/');
-                    execute('touch ../newfrontend/src/addr/addr.json');
+                    shell.rm('-rf', '../frontend/src/addr/');
+                    shell.mkdir('-p', '../frontend/src/addr/');
+                    execute('touch ../frontend/src/addr/addr.json');
                     shell.env.semAddr = String(semaphoreContract.address);
                     shell.env.scAddr = String(scContract.address);
                     shell.env.json = execute("jo -p -- -s semAddr=$semAddr -s scAddr=$scAddr");
-                    execute("echo $json >> ../newfrontend/src/addr/addr.json");
+                    execute("echo $json >> ../frontend/src/addr/addr.json");
                     return [4 /*yield*/, semaphoreContract.transferOwnership(scContract.address)];
                 case 8:
                     tx = _a.sent();

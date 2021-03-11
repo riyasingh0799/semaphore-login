@@ -5,7 +5,7 @@
     "main": "build/index.js",
     "scripts": {
         "watch": "tsc --watch",
-        "ganache": "npx ganache-cli -a 10 -m='lesson buzz squeeze about gain anger shiver rent pen inner hard pretty' --gasLimit=8800000 --port 8545 -i 1234",
+        "ganache": "npx ganache-cli -a 10 -m='replace lottery theme pistol lemon clutch arm salute excuse fossil victory keen' --gasLimit=8800000 --port 8545 -i 1234",
         "ds": "./scripts/downloadSnarks.sh",
         "compileABIs": "node build/compileAndDeploy.js -s solc -o ./abi/ -i ./sol/ --abi-only",
         "compileAndDeploy": "tsc && node build/compileAndDeploy.js -s solc -o ./abi/ -i ./sol/",
