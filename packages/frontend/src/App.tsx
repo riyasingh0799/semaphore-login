@@ -21,6 +21,13 @@ import {
   genBroadcastSignalParams,
 } from "libsemaphore";
 
+import {
+  initStorage,
+  storeId,
+  retrieveId,
+  hasId,
+} from './utils/storage'
+
 import addresses from "./addr/addr.json";
 import "./App.css";
 
@@ -54,9 +61,16 @@ class App extends Component {
       const scContract = await getContractInstance(web3, ClientABI, addresses.scAddr);
       console.log(scContract);
 
-      const identity = genIdentity();
+      var identity
+      if (hasId()) {
+        identity = retrieveId()
+    } else {
+        identity = genIdentity()
+        storeId(identity)
+    }
       const serialisedIdentity = serialiseIdentity(identity);
       let identityCommitment = genIdentityCommitment(identity);
+
       this.setState({
         web3,
         semaphoreContract,

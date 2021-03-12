@@ -16,24 +16,37 @@ import {
   unSerialiseIdentity,
 } from "libsemaphore";
 
+import {
+  initStorage,
+  storeId,
+  retrieveId,
+  hasId,
+} from '../utils/storage'
+
 import swal from "sweetalert";
 
 class App extends Component {
   state = {
     identity: "",
     phone: "",
-    serIdentity: "",
+    serializedIdentity: "",
     genKeypairAllowed: false,
   };
 
   componentDidMount = async () => {
     console.warn = () => {};
-    const identity = genIdentity();
+    var identity;
+    if (hasId()) {
+      identity = retrieveId()
+  } else {
+      identity = genIdentity()
+      storeId(identity)
+  }
     console.log(identity)
-    const serIdentity = serialiseIdentity(identity);
+    const serializedIdentity = serialiseIdentity(identity);
     const identityCommitment = genIdentityCommitment(identity);
     console.log(identityCommitment);
-    this.setState({ identity, serIdentity, identityCommitment });
+    this.setState({ identity, serializedIdentity, identityCommitment });
   };
 
   handleChange(e) {
@@ -53,12 +66,7 @@ class App extends Component {
           icon: "success",
         });
 
-        localStorage.setItem("identity", this.state.serIdentity);
-        localStorage.setItem(
-          "identityCommitment",
-          this.state.identityCommitment
-        );
-        console.log("ID commitment: " + genIdentityCommitment(unSerialiseIdentity(this.state.serIdentity)))
+        console.log("ID commitment: " + genIdentityCommitment(unSerialiseIdentity(this.state.serializedIdentity)))
         this.setState({ genKeypairAllowed: true });
       } catch (e) {
         console.log(e)
@@ -72,11 +80,10 @@ class App extends Component {
 
   handleCreateNewID() {
     const identity = genIdentity();
-    const serIdentity = serialiseIdentity(identity);
+    storeId(identity);
+    const serializedIdentity = serialiseIdentity(identity);
     const identityCommitment = genIdentityCommitment(identity);
-    localStorage.setItem("identity", identity);
-    localStorage.setItem("identityCommitment", identityCommitment);
-    this.setState({ identity, serIdentity, identityCommitment });
+    this.setState({ identity, serializedIdentity, identityCommitment });
   }
 
   handleGenKeypair() {
@@ -104,7 +111,7 @@ class App extends Component {
                   <label className="label">Your ID</label>
                   <textarea
                     className="textarea is-small"
-                    value={this.state.serIdentity}
+                    value={this.state.serializedIdentity}
                   ></textarea>
                 </div>
 

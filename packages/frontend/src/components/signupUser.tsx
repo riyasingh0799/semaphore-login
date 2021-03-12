@@ -21,6 +21,13 @@ import swal from "sweetalert";
 
 import genAuth from '../utils/semaphore'
 
+import {
+  initStorage,
+  storeId,
+  retrieveId,
+  hasId,
+} from '../utils/storage'
+
 class App extends Component {
   state = {
     email: "",
@@ -39,12 +46,9 @@ class App extends Component {
   componentDidMount = async () => {
     console.warn = () => {};
     console.log(this.state.scContract);
-    const identityString = localStorage.getItem("identity");
-    // const identityCommitment = localStorage.getItem("identityCommitment");
-    const identity = unSerialiseIdentity(identityString);
-    // console.log("id commitment " + genIdentityCommitment(identity));
-
-    this.setState({ identity, identityString });
+    const identity = retrieveId()
+    const serialisedIdentity = serialiseIdentity(identity)
+    this.setState({ identity, serialisedIdentity });
     const keypair = localStorage.getItem("keypair");
     console.log(keypair);
     const pubkey = JSON.parse(keypair).pubkey.toString();
@@ -93,7 +97,7 @@ class App extends Component {
                   <label className="label">Your ID</label>
                   <textarea
                     className="textarea is-small"
-                    value={this.state.identityString}
+                    value={this.state.serialisedIdentity}
                   ></textarea>
                 </div>
 

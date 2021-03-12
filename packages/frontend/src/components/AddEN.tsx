@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 
-import { genExternalNullifier } from "libsemaphore";
+import { genExternalNullifier, genIdentityCommitment } from "libsemaphore";
 
 import swal from "sweetalert";
+import { retrieveId } from "../utils/storage";
 
 class App extends Component {
   state = { domain: "" };
@@ -18,13 +19,10 @@ class App extends Component {
   }
 
   componentDidMount = async () => {
-    console.warn = () => {};
-    const identityCommitment = localStorage.getItem("identityCommitment");
-    this.setState({ showModal: false, identityCommitment});
-  };
-
-  handleClick = () => {
-    this.setState({ isModal: !this.state.isModal });
+    console.warn = () => { };
+    const identity = retrieveId();
+    const identityCommitment = genIdentityCommitment(identity);
+    this.setState({ identityCommitment });
   };
 
   handleChange(e) {
@@ -49,7 +47,7 @@ class App extends Component {
           icon: "success",
         });
 
-        this.setState({domain: ""})
+        this.setState({ domain: "" })
       } catch (e) {
         console.log(e);
       }
@@ -57,73 +55,43 @@ class App extends Component {
   };
 
   render() {
-    const active = this.state.isModal ? "is-active" : "";
 
     return (
       <div className="App">
-        <div className={`modal ${active}`} id="modal">
-          <div className="modal-background"></div>
-          <div className="modal-card">
-            <header className="modal-card-head">
-              <p className="modal-card-title">Add EN</p>
-              <button
-                className="delete"
-                aria-label="close"
-                onClick={this.handleClick.bind(this)}
-              ></button>
-            </header>
-            <section className="modal-card-body">
-              <div className="field">
-                <label className="label">Domain</label>
-                <div className="control">
-                  <input
-                    className="input"
-                    type="text"
-                    name="domain"
-                    onChange={this.handleChange.bind(this)}
-                  />
-                </div>
-              </div>
 
-              <br />
-              <div className="field ">
-                <div className="control">
-                  <button
-                    className="button is-primary"
-                    onClick={this.handleAddEN.bind(this)}
-                  >
-                    Submit
-                  </button>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <button className="button" onClick={this.handleClick.bind(this)}>
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </section>
-          </div>
-        </div>
-        <br />
         <div className="sections">
           <div className="columns">
             <div className="column is-12-mobile is-8-desktop is-offset-2-desktop">
               <div className="box">
-                <div className="buttons">
-                  <button
-                    className="button is-info"
-                    onClick={this.handleClick.bind(this)}
-                  >
-                    Add EN
-                  </button>
+                <div className="field">
+                  <label className="label">Domain</label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="text"
+                      name="domain"
+                      onChange={this.handleChange.bind(this)}
+                    />
+                  </div>
+                </div>
 
-                  <button className="button is-warning">Send Challenge</button>
-                  <button className="button is-success">Authenticate</button>
+                <br />
+                <div className="field ">
+                  <div className="control">
+                    <button
+                      className="button is-primary"
+                      onClick={this.handleAddEN.bind(this)}
+                    >
+                      Submit
+                  </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
     );
   }
 }

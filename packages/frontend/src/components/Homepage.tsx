@@ -18,6 +18,10 @@ class App extends Component {
   
   componentDidMount = async () => {
     console.warn = () => {};
+
+    const leaves = await this.props.scContract.methods.getIDCommitments().call({from: this.props.accounts[0]});
+    console.log("leaves: "+leaves);
+    
     var owner = await this.state.scContract.methods
       .owner()
       .call({ from: this.state.accounts[0] });
