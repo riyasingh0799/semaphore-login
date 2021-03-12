@@ -11,14 +11,19 @@ import ManageEN from "./AddEN";
 import RegisterUser from "./RegisterUser";
 import Homepage from "./Homepage";
 import SignupUser from "./signupUser";
+import AuthSP from "./AuthSP"
 
 import "../App.css";
 
 class NavComp extends Component {
 
-  state={isOwner: false, pendingApprovals: 1000}
+  state={isOwner: false}
   
-   
+  constructor(props) {
+    super(props);
+    
+  }
+
   render() {
     return ( 
       <div className="App">
@@ -31,7 +36,7 @@ class NavComp extends Component {
 
                 <div className="navbar-dropdown">
                     <a className="navbar-item" href="/manage_en">Add EN</a>
-              <a className="navbar-item" >Authenticate</a>
+              <a className="navbar-item" href="/auth">Authenticate</a>
                 </div>
               </div>
 
@@ -65,7 +70,7 @@ class NavComp extends Component {
                 <div className="navbar-item">
                   <span>
                     <a className="button is-primary navbar" href="/kyc_ca" style={{lineHeight: "30px"}}>
-                      Pending Approvals: {this.state.pendingApprovals}
+                      Pending Approvals: {this.props.pendingApprovals}
                     </a>
                   </span>
                 </div>
@@ -162,6 +167,17 @@ class NavComp extends Component {
               path="/kyc_ca"
               component={() => (
                 <KycApproveCA
+                  web3={this.props.web3}
+                  accounts={this.props.accounts}
+                  scContract={this.props.scContract}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/auth"
+              component={() => (
+                <AuthSP
                   web3={this.props.web3}
                   accounts={this.props.accounts}
                   scContract={this.props.scContract}

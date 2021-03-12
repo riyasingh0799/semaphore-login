@@ -34,14 +34,14 @@ class App extends Component {
   };
 
   componentDidMount = async () => {
-    console.warn = () => {};
+    console.warn = () => { };
     var identity;
     if (hasId()) {
       identity = retrieveId()
-  } else {
+    } else {
       identity = genIdentity()
       storeId(identity)
-  }
+    }
     console.log(identity)
     const serializedIdentity = serialiseIdentity(identity);
     const identityCommitment = genIdentityCommitment(identity);
@@ -56,7 +56,7 @@ class App extends Component {
   handleRegisterBtnClicked = async () => {
     if (this.state.phone.length > 0) {
       try {
-        console.log("commitment: "+this.state.identityCommitment.toString())
+        console.log("commitment: " + this.state.identityCommitment.toString())
         const index = await this.props.scContract.methods
           .requestRegistration(this.state.identityCommitment.toString())
           .send({ from: this.props.accounts[0] });
@@ -85,7 +85,6 @@ class App extends Component {
     const identityCommitment = genIdentityCommitment(identity);
     this.setState({ identity, serializedIdentity, identityCommitment });
   }
-
   handleGenKeypair() {
     const privkey = Crypto.randomBytes(32);
     const pubkey = genPubKey(privkey);
@@ -98,85 +97,91 @@ class App extends Component {
     );
     localStorage.setItem("keypair", keypairString);
   }
-
   render() {
     return (
       <div className="App">
-        <br />
-        <div className="sections" style={{maxWidth:"1000px", margin: "auto"}}>
-          <div className="columns">
-            <div className="column is-12-mobile is-8-desktop is-offset-2-desktop">
-              <div className="box">
-                <div className="field">
-                  <label className="label">Your ID</label>
-                  <textarea
-                    className="textarea is-small"
-                    value={this.state.serializedIdentity}
-                  ></textarea>
-                </div>
 
-                <br />
-                <div className="field ">
-                  <div className="control">
-                    <button
-                      className="button is-primary"
-                      onClick={this.handleCreateNewID.bind(this)}
-                    >
-                      Create New
+        <body>
+          <br />
+          <div className="sections" style={{ maxWidth: "1000px", margin: "auto" }}>
+            <div className="columns">
+              <div className="column is-12-mobile is-8-desktop is-offset-2-desktop">
+                <div className="box">
+                  <div className="field">
+                    <label className="label">Your ID</label>
+                    <textarea
+                      className="textarea is-small"
+                      value={this.state.serializedIdentity}
+                    ></textarea>
+                  </div>
+
+                  <br />
+                  <div className="field ">
+                    <div className="control">
+                      <button
+                        className="button is-primary"
+                        onClick={this.handleCreateNewID.bind(this)}
+                      >
+                        Create New
                     </button>
+                    </div>
                   </div>
-                </div>
-                <br />
-                <div className="field">
-                  <label className="label">Phone No. (for KYC)</label>
-                  <div className="control">
-                    <input
-                      className="input"
-                      type="text"
-                      name="phone"
-                      onChange={this.handleChange.bind(this)}
-                    />
+                  <br />
+                  <div className="field">
+                    <label className="label">Phone No. (for KYC)</label>
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="text"
+                        name="phone"
+                        onChange={this.handleChange.bind(this)}
+                      />
+                    </div>
                   </div>
-                </div>
-                <br />
-                <div className="field ">
-                  <div className="control">
-                    <button
-                      className="button is-primary"
-                      onClick={this.handleRegisterBtnClicked.bind(this)}
-                    >
-                      Register
+                  <br />
+                  <div className="field ">
+                    <div className="control">
+                      <button
+                        className="button is-primary"
+                        onClick={this.handleRegisterBtnClicked.bind(this)}
+                      >
+                        Register
                     </button>
+                    </div>
                   </div>
-                </div>
-              </div>
+
+                  {this.state.genKeypairAllowed && <div>
+                    <hr />
+                    <div className="field ">
+                      <div className="control">
+                        <button
+                          className="button is-primary"
+                          onClick={this.handleGenKeypair.bind(this)}
+                          disabled={!this.state.genKeypairAllowed}
+                        >
+                          Generate Keypair
+                    </button>
+                      </div>
+                    </div>
+                    <br />
+                    <div className="field">
+                      <label className="label">Your Pubkey</label>
+                      <textarea
+                        className="textarea is-small"
+                        value={this.state.pubkey}
+                      ></textarea>
+
               <br />
-
-              <div className="box">
-                <div className="field ">
-                  <div className="control">
-                    <button
-                      className="button is-primary"
-                      onClick={this.handleGenKeypair.bind(this)}
-                      disabled={!this.state.genKeypairAllowed}
-                    >
-                      Generate Keypair
-                    </button>
+                    </div>
+                  </div>}
                   </div>
-                </div>
-                <br />
-                <div className="field">
-                  <label className="label">Your Pubkey</label>
-                  <textarea
-                    className="textarea is-small"
-                    value={this.state.pubkey}
-                  ></textarea>
-                </div>
-              </div>
-            </div>
+
+                  </div>
+                  </div>
+                  </div>
+
+        </body>
           </div>
-        </div>
-      </div>
     );
   }
 }

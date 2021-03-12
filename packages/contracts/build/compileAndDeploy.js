@@ -116,7 +116,7 @@ var compileAndDeploy = function (abiDir, solDir, solcBinaryPath, rpcUrl) {
                     solcCmd = solcBinaryPath + " -o " + abiDir + " " + solDir + "/*.sol --overwrite --optimize --abi --bin";
                     result = execute(solcCmd);
                     provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-                    deployKey = "0x65a694ae485808ee346228f59a1eb9dd2b6d1b1f4b0212007469b7452118d9ba";
+                    deployKey = "0x3c6a7966b2cf17e5f95e3acb8b671fc15864c9e8365e4bf1e476eb22952e725e";
                     wallet = new ethers.Wallet(deployKey, provider);
                     _a.label = 1;
                 case 1:

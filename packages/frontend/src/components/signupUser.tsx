@@ -49,13 +49,8 @@ class App extends Component {
     const identity = retrieveId()
     const serialisedIdentity = serialiseIdentity(identity)
     this.setState({ identity, serialisedIdentity });
-    const keypair = localStorage.getItem("keypair");
-    console.log(keypair);
-    const pubkey = JSON.parse(keypair).pubkey.toString();
-    console.log(pubkey);
-    this.setState({ pubkey });
     console.log(this.state.identity)
-
+    console.log("identity commitment: "+genIdentityCommitment(identity))
   };
 
   handleChange(e) {
@@ -64,7 +59,7 @@ class App extends Component {
 
   fetchWithoutCache = async (url) => {
     return await fetch(url, { cache: "no-store" });
-  };
+  }; 
 
   broadcastSignal = async() => {
     if(this.state.identity)
@@ -98,15 +93,6 @@ class App extends Component {
                   <textarea
                     className="textarea is-small"
                     value={this.state.serialisedIdentity}
-                  ></textarea>
-                </div>
-
-                <br />
-                <div className="field">
-                  <label className="label">Your Pubkey</label>
-                  <textarea
-                    className="textarea is-small"
-                    value={this.state.pubkey}
                   ></textarea>
                 </div>
 

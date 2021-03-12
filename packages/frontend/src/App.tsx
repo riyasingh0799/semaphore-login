@@ -37,7 +37,7 @@ class App extends Component {
     identity: "",
     email: "",
     isOwner: false,
-    pendingApprovals: 1000000000,
+    pendingApprovals: 0,
   };
 
   componentDidMount = async () => {
@@ -71,6 +71,7 @@ class App extends Component {
       const serialisedIdentity = serialiseIdentity(identity);
       let identityCommitment = genIdentityCommitment(identity);
 
+      const pendingApprovals = await scContract.methods.totalPendingRegistrationRequests().call({from:accounts[0]});
       this.setState({
         web3,
         semaphoreContract,
@@ -79,6 +80,7 @@ class App extends Component {
         serialisedIdentity,
         identityCommitment,
         accounts,
+        pendingApprovals
       });
 
       console.log(this.state)
@@ -113,6 +115,7 @@ class App extends Component {
           scContract={this.state.scContract}
           semaphoreContract={this.state.semaphoreContract}
           isOwner={this.state.isOwner}
+          pendingApprovals={this.state.pendingApprovals}
           ></NavComp>
       </div>
     );
