@@ -14,6 +14,7 @@ import SignupUser from "./signupUser";
 import AuthSP from "./AuthSP"
 
 import "../App.css";
+import "../App.sass";
 
 class NavComp extends Component {
 

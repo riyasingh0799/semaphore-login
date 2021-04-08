@@ -5,14 +5,13 @@
     "main": "build/index.js",
     "scripts": {
         "watch": "tsc --watch",
-        "ganache": "npx ganache-cli -a 10 -m='dust pipe bottom van clump wave radio extra hope produce rely party' --gasLimit=8800000 --port 8545 -i 1234",
+        "ganache": "npx ganache-cli -a 10 -m='wise leave split sick speed still piece usual dove victory people spend' --gasLimit=8800000 --port 8545 -i 1234",
         "ds": "./scripts/downloadSnarks.sh",
         "compileABIs": "node build/compileAndDeploy.js -s solc -o ./abi/ -i ./sol/ --abi-only",
         "compileAndDeploy": "tsc && node build/compileAndDeploy.js -s solc -o ./abi/ -i ./sol/",
         "compileAndDeployProd": "node build/compileAndDeploy.js -s solc -o ./abi/ -i ./sol/ -m",
         "build": "tsc"
     },
-    "author": "Koh Wei Jie",
     "dependencies": {
         "circomlib": "https://github.com/kobigurk/circomlib.git#347822604996bf25f659f96ee0f02810a1f71bb0",
         "ethers": "4.0.45",

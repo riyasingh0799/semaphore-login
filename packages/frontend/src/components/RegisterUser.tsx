@@ -29,8 +29,7 @@ class App extends Component {
   state = {
     identity: "",
     phone: "",
-    serializedIdentity: "",
-    genKeypairAllowed: false,
+    serializedIdentity: ""
   };
 
   componentDidMount = async () => {
@@ -67,7 +66,6 @@ class App extends Component {
         });
 
         console.log("ID commitment: " + genIdentityCommitment(unSerialiseIdentity(this.state.serializedIdentity)))
-        this.setState({ genKeypairAllowed: true });
       } catch (e) {
         console.log(e)
         swal({
@@ -149,39 +147,13 @@ class App extends Component {
                     </button>
                     </div>
                   </div>
-
-                  {this.state.genKeypairAllowed && <div>
-                    <hr />
-                    <div className="field ">
-                      <div className="control">
-                        <button
-                          className="button is-primary"
-                          onClick={this.handleGenKeypair.bind(this)}
-                          disabled={!this.state.genKeypairAllowed}
-                        >
-                          Generate Keypair
-                    </button>
-                      </div>
-                    </div>
-                    <br />
-                    <div className="field">
-                      <label className="label">Your Pubkey</label>
-                      <textarea
-                        className="textarea is-small"
-                        value={this.state.pubkey}
-                      ></textarea>
-
-              <br />
-                    </div>
-                  </div>}
-                  </div>
-
-                  </div>
-                  </div>
-                  </div>
-
-        </body>
+                  <br />
+                </div>
+              </div>
+            </div>
           </div>
+        </body>
+      </div>
     );
   }
 }

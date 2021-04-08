@@ -53,6 +53,15 @@ display: inline-block;
   color: #61dafb;
 }
 
+.button.is-primary {
+  background-color: #fa7c91;
+  border-color: transparent;
+}
+
+.button.is-primary:hover {
+  background-color: #f76980;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

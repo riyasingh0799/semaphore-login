@@ -101,7 +101,7 @@ const compileAndDeploy = async (
 
     // create provider and wallet
     const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
-    const deployKey = "0x3c6a7966b2cf17e5f95e3acb8b671fc15864c9e8365e4bf1e476eb22952e725e"
+    const deployKey = "0x54ebe260c8c6b690e2ba2538caf37b41681f6f0e5b9b590058d665be1b0cfbe9"
     const wallet = new ethers.Wallet(deployKey, provider)
 
     // deploy MiMC
