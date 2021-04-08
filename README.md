@@ -3,6 +3,8 @@
 ## Scope
 A decentralized zero knowledge proof of concept for anonymous login using [Semaphore](https://github.com/appliedzkp/semaphore).
 
+Normally, when signing up for a website, we enter our email and then it is verified through a confirmation email. However, this leaks privacy for genuine users, and it is very easy for an attacker to spin up multiple email IDs and accounts. We can prevent these attacks by making the KYC process more extensive, but this leaks even more info for the honest users. So we intend to use ZKP alongwith very high level of KYC to prevent privacy leakage and malicious signups.
+
 User can login to their account by proving they belong to the list of KYC’ed users without revealing their validated properties (eg. phone number). Also, the KYC authority is not notified of the login purpose.
 
 ## Architecture
@@ -12,7 +14,7 @@ A trusted Central Entity is responsible for the KYC procedure and adding the use
 
 User will create a keypair and broadcast their pubkey to the external nullifier specific to the service provider.
 
-When user requests for signup, the service provider will send challenge string. User signs it with private key and sends it back. Service Provider allows access if pubkey recovered from the signed message matches the one broadcast earlier to a valid external nullifier.
+When a registered user requests for signup, the service provider will send login credentials which expire periodically.
 
 ## Local deployment steps
 
