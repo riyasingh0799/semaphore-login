@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WUPHF</title>
+    <style>
+        body {
+            background-color: #fbfafd;
+            color: rgb(118, 224, 189);
+            text-align: center;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+    <script>
+        async function login() {
+            var x = document.getElementById("token").value;
+            const body = {token: x}
+            await axios.post("http://localhost:4000/api/login",  body)
+            .then((res) => {
+                console.log(res.data)
+                if(res.data.success)
+                    alert("Login successful!")
+                })
+            }
+
+        async function getEN() {
+            await axios.get("http://localhost:4000/api/getEN", { params: { domain: "wuphf.com" } })
+                .then((res) => {
+                    console.log(res.data)
+                    // var en = res.data.en;
+                    document.getElementById("en").innerHTML = "Current EN: " + res.data.en;
+                })
+        }
+
+    </script>
+
+    
+</head>
+
+<body onload="getEN()">
+    <div>
+        <h1>WUPHF</h1>
+        <h2 id="en">EN</h2>
+            <label for="token">Login Token</label><br>
+            <input type="text" id="token" name="token"><br>
+            <input type="submit" value="Submit" id="submit" onclick="login()">
+    </div>
+</body>
+
+</html>

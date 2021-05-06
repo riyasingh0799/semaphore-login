@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios';
 
 import {
   Identity,
@@ -48,9 +49,9 @@ class App extends Component {
     console.log(this.state.scContract);
     const identity = retrieveId()
     const serialisedIdentity = serialiseIdentity(identity)
-    this.setState({ identity, serialisedIdentity });
-    console.log(this.state.identity)
-    console.log("identity commitment: "+genIdentityCommitment(identity))
+    const identityCommitment = genIdentityCommitment(identity)
+    this.setState({ identity, serialisedIdentity, identityCommitment});
+    console.log("identityCommitment: "+ this.state.identityCommitment)
   };
 
   handleChange(e) {
@@ -71,12 +72,30 @@ class App extends Component {
   handleSignUpBtnClicked = async () => {
     console.log(this.state.en);
     if (this.state.en.length > 0) {
-        const res = await this.broadcastSignal();
+        // const res = await this.broadcastSignal();
+        
+        await axios
+      .post('http://localhost:4000/api/genCredentials', {
+        user_id: this.state.identityCommitment.toString().slice(-6)
+      })
+      .then((res) => {
+        console.log(res.data)
         swal({
-          title: "Successfully signed up!",
-          icon: "success",
-        });
-        this.setState({ phone: "" });
+          title: "Signup Successful!",
+          text: "Token: "+ res.data.token+ "\n\n"+ "Proof: {\"pi_a\":\[\"16006342993685706563143884116771228340658308833755221679234256181530224581958\"\,\"20687242852290213408853627325831800844880215548146296848261781734687745037172\"\,\"1\"\]\,\"pi_b\"\:\[\[\"18165872478359898962941792914396896452286553494398686399126164854827032359666\"\,\"13726841067431886870863644797331139355522394850909841879397749855401727694268\"\]\,\[\"16554234181430824853442070900801820648163412273198174216344069884059125344811\"\,\"20454406429274137680239962430878046859459607012935656864132719829233893124147\"\]\,\[\"1\"\,\"0\"\]\]\,\"pi_c\"\:\[\"3724514752995428668046476227608446974927121284831290494562277521972567126867\"\,\"17455114098920187285736981328166020481854771229634370341911080508922646380368\"\,\"1\"\]\}",
+          icon: "success"
+        })
+
+          const itemName = "Token".concat(this.state.en.toString().slice(-6))
+          localStorage.setItem(itemName, JSON.stringify({token: res.data.token, ts: res.data.ts}))
+      
+          const r = localStorage.getItem(itemName)
+          console.log(r)
+        })
+      .catch(err => {
+        console.error(err);
+      });
+
     }
   };
 

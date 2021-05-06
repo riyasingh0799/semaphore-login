@@ -5,7 +5,7 @@
     "main": "build/index.js",
     "scripts": {
         "watch": "tsc --watch",
-        "ganache": "npx ganache-cli -a 10 -m='wise leave split sick speed still piece usual dove victory people spend' --gasLimit=8800000 --port 8545 -i 1234",
+        "ganache": "npx ganache-cli -a 10 -m='segment tired tooth chuckle venture october switch rug chicken hungry pole dry mother luxury sketch' --gasLimit=8800000 --port 8545 -i 1234",
         "ds": "./scripts/downloadSnarks.sh",
         "compileABIs": "node build/compileAndDeploy.js -s solc -o ./abi/ -i ./sol/ --abi-only",
         "compileAndDeploy": "tsc && node build/compileAndDeploy.js -s solc -o ./abi/ -i ./sol/",

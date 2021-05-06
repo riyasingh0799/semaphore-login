@@ -4,6 +4,7 @@ import { genExternalNullifier, genIdentityCommitment } from "libsemaphore";
 
 import swal from "sweetalert";
 import { retrieveId } from "../utils/storage";
+import axios from 'axios';
 
 class App extends Component {
   state = { domain: "" };
@@ -46,6 +47,22 @@ class App extends Component {
           text: "Hash: " + hash,
           icon: "success",
         });
+
+        const ts = Date.now()
+        const body = {en: hash, domain: this.state.domain, ts_created: ts}
+
+        axios
+      .post('http://localhost:4000/api/enStore', body)
+      .then(() => {
+        console.log('En data sent successfully')
+        swal({
+          title: "Successfully Registered!",
+          icon: "success",
+        });
+      })
+      .catch(err => {
+        console.error(err);
+      });
 
         this.setState({ domain: "" })
       } catch (e) {

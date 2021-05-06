@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios';
 
 import {
   Identity,
@@ -44,9 +45,17 @@ class App extends Component {
 
       const listItem = <li key={i}>{request}</li>
       list.push(listItem)
-    }
+      const _id = request.toString().slice(-6);
+      console.log(_id)
+      await axios.get('http://localhost:4000/api/getKycData', {
+        params: {
+          id: _id
+        }
+      }).then((res) => {
+        console.log(res.data)
+    })
+  }
     this.setState({ totalPendingRegistrationRequests, list })
-
   }
 
   approve = async () => {
