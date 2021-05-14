@@ -17,10 +17,10 @@ app.use(bodyParser.json());
 MongoClient.connect('mongodb://localhost:27017') // This is the location of where your local database is living.
   .then((client) => {
     const db = client.db('SemaphoreDB'); // The name we gave our DB
-    const kycDataCollection = db.collection('usersKycData'); // The name we gave our collection inside the DB
+    const kycDataCollection = db.collection('userKycData'); // The name we gave our collection inside the DB
     const enCollection = db.collection('enStore');
     const otpCollection = db.collection('userOTP');
-    const userCredentials = db.collection('Creds');
+    const userCredentials = db.collection('userCredentials');
 
    app.use('/api/kyc', function (req, res, next) {
         console.log('Request Type:', req.method)
@@ -120,12 +120,18 @@ MongoClient.connect('mongodb://localhost:27017') // This is the location of wher
     console.log(req.body.token)
     userCredentials.findOne({token: req.body.token}).then((doc) => {
       console.log(doc)
-      if(ts_now-doc.ts< 1814400000) {
-        res.send({success: 1})
+      if(doc) {
+        if(ts_now-doc.ts< 1814400000) {
+          res.send({success: 1})
+        }
+        else  {
+          res.send({success: 0})
+        }
       }
-      else  {
+      else {
         res.send({success: 0})
       }
+      
   }).catch(error => console.error(error))
 
 })

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <title>Service Provider Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+        async function login() {
+            var x = document.getElementById("token").value;
+            const body = { token: x }
+            await axios.post("http://localhost:4000/api/login", body)
+                .then((res) => {
+                    console.log(res.data)
+                    if (res.data.success ==1)
+                        alert("Login successful!")
+                    else
+                        alert("Wrong token! Try again.")
+                })
+        }
+        async function getEN() {
+            await axios.get("http://localhost:4000/api/getEN", { params: { domain: "exampleserviceprovider.com" } })
+                .then((res) => {
+                    console.log(res.data)
+                    // var en = res.data.en;
+                    document.getElementById("en").innerHTML = "Current EN: " + res.data.en;
+                })
+        }
+
+    </script>
+</head>
+
+<body onload="getEN()">
+    <section class="section">
+        <div class="container" style="text-align: center;">
+            <span class="title">Service Provider Website
+            </span>
+            <br />
+            <br />
+            <h2 id="en">EN</h2>
+            <br /><br />
+            <div className="field">
+                <label className="label">Login</label>
+                <div className="control">
+                    <input className="input is-small" type="text" name="en" id="token" placeholder="Login Token" />
+                    <input type="submit" value="Submit" id="submit" onclick="login()" />
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

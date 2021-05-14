@@ -91,10 +91,10 @@ class App extends Component {
                 </ul>
               </div>
               <br />
-              <div class="field ">
-                <div class="control">
+              <div className="field ">
+                <div className="control">
                   <button
-                    class="button is-primary"
+                    className="button is-primary"
                     onClick={this.approve.bind(this)}
                   >
                     Approve All
